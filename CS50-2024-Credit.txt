@@ -1,0 +1,52 @@
+#include <cs50.h>
+#include <math.h>
+#include <stdio.h>
+int main()
+{
+    long n = get_long("Number: ");
+    int count = 0, dig1 = 0, dig2 = 0;
+    long n2 = n, n1 = n;
+    do
+    {
+        n /= 10;
+        count++;
+    }
+    while (n != 0);
+    n2 = n2 / pow(10, count - 2);
+    int sum1 = 0, sum2 = 0, sum = 0, dig = 0;
+    while (n1 != 0)
+    {
+        dig2 = n1 % 10;
+        sum2 += dig2;
+        n1 = n1 / 10;
+        dig1 = 2 * (n1 % 10);
+        dig = dig1;
+        while (dig1 / 10 != 0)
+        {
+            dig1 = dig1 % 10;
+            dig1 += dig / 10;
+        }
+        sum1 += dig1;
+        n1 = n1 / 10;
+    }
+    sum = sum1 + sum2;
+    if (sum % 10 == 0)
+    {
+        if ((count == 15) && (n2 == 34 || n2 == 37))
+        {
+            printf("AMEX\n");
+        }
+        else if ((count == 16) && (n2 >= 51 && n2 <= 55))
+        {
+            printf("MASTERCARD\n");
+        }
+        else if ((count == 13 || count == 16) && (n2 / 10 == 4))
+        {
+            printf("VISA\n");
+        }
+        else
+            printf("INVALID\n");
+    }
+    else
+        printf("INVALID\n");
+}
